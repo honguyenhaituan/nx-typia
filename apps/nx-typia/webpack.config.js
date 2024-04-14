@@ -1,19 +1,15 @@
-const { NxWebpackPlugin } = require('@nx/webpack');
-const { join } = require('path');
+const { composePlugins, withNx } = require('@nx/webpack');
 
-module.exports = {
-  output: {
-    path: join(__dirname, '../../dist/apps/nx-typia'),
-  },
-  plugins: [
-    new NxWebpackPlugin({
-      target: 'node',
-      compiler: 'tsc',
-      main: './src/main.ts',
-      tsConfig: './tsconfig.app.json',
-      assets: ['./src/assets'],
-      optimization: false,
-      outputHashing: 'none',
-    }),
-  ],
-};
+module.exports = composePlugins(withNx({}), (config) => {
+  config.module?.rules.forEach((rule) => {
+    if (rule.options?.transpileOnly) {
+      rule.options.transpileOnly = false;
+    }
+  });
+
+  config.devtool = 'inline-source-map';
+  config.plugins = config.plugins?.filter(
+    (plugin) => plugin.constructor.name !== 'ForkTsCheckerWebpackPlugin'
+  );
+  return config;
+});

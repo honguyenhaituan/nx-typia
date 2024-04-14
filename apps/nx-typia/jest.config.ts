@@ -1,6 +1,5 @@
 /* eslint-disable */
 export default {
-  displayName: 'nx-typia',
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
   transform: {

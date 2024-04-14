@@ -5,6 +5,20 @@
   "projectType": "application",
   "tags": [],
   "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/nx-typia",
+        "main": "apps/nx-typia/src/main.ts",
+        "tsConfig": "apps/nx-typia/tsconfig.app.json",
+        "webpackConfig": "apps/nx-typia/webpack.config.js",
+        "assets": ["apps/nx-typia/src/assets"]
+      }
+    },
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
